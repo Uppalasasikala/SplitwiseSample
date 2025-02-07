@@ -22,12 +22,14 @@ public class Expense {
 
     @Column(name = "description", length = 255)
 	public String description;
-    public Expense(Integer i, Double d, String string) {}
+    public Expense() {}
 
-	public Expense() {
-
-	}
-
+    // Constructor to initialize all fields
+    public Expense(Integer id, Double amount, String description) {
+        this.id = id;
+        this.amount = amount;
+        this.description = description;
+    }
 	public Integer getId() {
 		return id;
 	}

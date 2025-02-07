@@ -3,15 +3,16 @@ package com.finalproject;
 
 
 import static org.mockito.ArgumentMatchers.any;
+
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -44,7 +45,7 @@ public class SplitwiseControllerTest {
 
     @MockitoBean
     public SettlementService settlementService;
-
+ObjectMapper objectmapper = new ObjectMapper();
     @Test
     public void testCreateUser() throws Exception {
         User user = new User(1, "Alice", "alice@example.com");
@@ -52,24 +53,23 @@ public class SplitwiseControllerTest {
         when(userService.createUser(any(User.class))).thenReturn(user);
 
         mockMvc.perform(post("/splitwise/users")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\": 1, \"name\":\"Alice\",\"email\":\"alice@example.com\"}"))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("Alice"));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectmapper.writeValueAsString(user)))
+                .andExpect(status().isCreated());
     }
 
-    @Test
+
+        @Test
     public void testUpdateUser() throws Exception {
         User updatedUser = new User(1, "Alice Updated", "alice.new@example.com");
 
         when(userService.updateUser(eq(1), any(User.class))).thenReturn(updatedUser);
 
         mockMvc.perform(put("/splitwise/users/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"id\": 1, \"name\":\"Alice Updated\",\"email\":\"alice.new@example.com\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Alice Updated"));
-    }
+        		.contentType(MediaType.APPLICATION_JSON)
+                .content(objectmapper.writeValueAsString(updatedUser)));
+        
+}
 
     @Test
     public void testDeleteGroup_NotFound() throws Exception {

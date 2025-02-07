@@ -18,13 +18,13 @@ import com.finalproject.dto.ExpenseRequest;
 @Service
 public class ExpenseService {
     @Autowired
-    public ExpenseRepository expenseRepository;
+    private ExpenseRepository expenseRepository;
 
     @Autowired
-    public UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public GroupRepository groupRepository;
+    private GroupRepository groupRepository;
 
     public Expense addExpense(ExpenseRequest request) {
         Group group = groupRepository.findById(request.getGroupId())

@@ -1,57 +1,59 @@
 package com.finalproject;
 
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.finalproject.Entity.Expense;
+import com.finalproject.Entity.Group;
+import com.finalproject.Entity.User;
 import com.finalproject.Repo.ExpenseRepository;
 import com.finalproject.Repo.GroupRepository;
 import com.finalproject.Repo.UserRepository;
 import com.finalproject.Service.ExpenseService;
 import com.finalproject.dto.ExpenseRequest;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class ExpenseServiceTest {
 
     @Mock
-    public ExpenseRepository expenseRepository;
+    private ExpenseRepository expenseRepository;
 
     @Mock
-    public GroupRepository groupRepository;
+    private GroupRepository groupRepository;
 
     @Mock
-    public UserRepository userRepository;
+    private UserRepository userRepository;
 
     @InjectMocks
-    public ExpenseService expenseService;
+    private ExpenseService expenseService;
 
     @Test
     public void testAddExpense() {
+        // Arrange
         Expense expense = new Expense(1, 100.0, "Lunch");
+        User user = new User(1, "John Doe","johnDoe12@gmail.com");
+        Group group = new Group(1, "Friends");
 
+        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        when(groupRepository.findById(1)).thenReturn(Optional.of(group));
         when(expenseRepository.save(any(Expense.class))).thenReturn(expense);
-
         Expense savedExpense = expenseService.addExpense(new ExpenseRequest(1, 1, 100.0, "Lunch"));
-
-        assertNotNull(savedExpense);
-        assertEquals(100.0, savedExpense.getAmount());
+        assertNotNull(savedExpense, "The saved expense should not be null");
+        assertEquals(100.0, savedExpense.getAmount(), "The amount should be 100.0");
+        assertEquals("Lunch", savedExpense.getDescription(), "The description should be 'Lunch'");
         verify(expenseRepository, times(1)).save(any(Expense.class));
     }
+
 
     @Test
     public void testGetAllExpenses_Empty() {

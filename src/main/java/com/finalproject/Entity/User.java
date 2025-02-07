@@ -23,7 +23,15 @@ public class User {
 
     @ManyToMany(mappedBy = "members")
 	public Set<Group> groups = new HashSet<>();
-   public User(Integer i, String string, String string2) {}
+    
+    public User() {}
+    
+   	public User(Integer id, String name, String email) {
+		this.id = id;
+		this.name = name;
+		this.email = email;
+	}
+
 	public Integer getId() {
 		return id;
 	}

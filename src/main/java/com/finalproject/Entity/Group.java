@@ -28,7 +28,10 @@ public class Group {
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
 	public Set<User> members = new HashSet<>();
-     public Group(){}
+     public Group(Integer i, String string){}
+	public Group() {
+		
+	}
 	public Integer getId() {
 		return id;
 	}
