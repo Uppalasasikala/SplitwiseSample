@@ -37,8 +37,5 @@ public class SettlementRequest {
         this.amount = amount;
     }
 
-    @Override
-    public String toString() {
-        return "SettlementRequest{payerId=" + payerId + ", payeeId=" + payeeId + ", amount=" + amount + "}";
-    }
+
 }

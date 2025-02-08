@@ -47,9 +47,5 @@ public class ExpenseRequest {
         this.description = description;
     }
 
-    @Override
-    public String toString() {
-        return "ExpenseRequest{groupId=" + groupId + ", payerId=" + payerId +
-                ", amount=" + amount + ", description='" + description + "'}";
-    }
+
 }

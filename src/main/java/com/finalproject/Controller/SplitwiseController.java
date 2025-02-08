@@ -24,6 +24,7 @@ import com.finalproject.Service.UserService;
 import com.finalproject.dto.ExpenseRequest;
 import com.finalproject.dto.GroupRequest;
 import com.finalproject.dto.SettlementRequest;
+import com.finalproject.dto.UserRequest;
 
 @RestController
 @RequestMapping("/splitwise")
@@ -43,7 +44,10 @@ public class SplitwiseController {
     // ========== USER ENDPOINTS ==========
 
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
+        User user = new User();
+        user.setName(userRequest.getName());
+        user.setEmail(userRequest.getEmail());
         return new ResponseEntity<>(userService.createUser(user), HttpStatus.CREATED);
     }
 

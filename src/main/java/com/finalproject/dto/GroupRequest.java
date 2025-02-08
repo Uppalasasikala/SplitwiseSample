@@ -29,8 +29,6 @@ public class GroupRequest {
         this.memberIds = memberIds;
     }
 
-    @Override
-    public String toString() {
-        return "GroupRequest{name='" + name + "', memberIds=" + memberIds + "}";
-    }
+
+
 }
