@@ -7,9 +7,17 @@ public class UserRequest {
 
     private String email;
 
-    // Getters and Setters
+    public UserRequest() {}
+    
 
-    public String getName() {
+    public UserRequest(String name, String email) {
+
+		this.name = name;
+		this.email = email;
+	}
+
+
+	public String getName() {
         return name;
     }
 

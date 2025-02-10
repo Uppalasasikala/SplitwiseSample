@@ -1,8 +1,7 @@
 package com.finalproject.Entity;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -27,11 +26,16 @@ public class Group {
         joinColumns = @JoinColumn(name = "group_id"),
         inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-	public Set<User> members = new HashSet<>();
-     public Group(Integer i, String string){}
-	public Group() {
-		
+	public List<User> members = new ArrayList<>();
+     
+	public Group() {}
+	
+	public Group(Integer id, String name, List<User> members) {
+		this.id = id;
+		this.name = name;
+		this.members = members;
 	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -44,10 +48,10 @@ public class Group {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Set<User> getMembers() {
+	public List<User> getMembers() {
 		return members;
 	}
-	public void setMembers(Set<User> members) {
+	public void setMembers(List<User> members) {
 		this.members = members;
 	} 
 }

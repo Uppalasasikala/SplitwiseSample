@@ -1,33 +1,55 @@
 package com.finalproject.EntityTest;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
 import com.finalproject.Entity.Settlement;
 import com.finalproject.Entity.User;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class SettlementTest {
+public class SettlementTest {
 
     @Test
-    void testSettlementEntity() {
-        // Constructor test
+    public void testNoArgsConstructor() {
         Settlement settlement = new Settlement();
+        assertNotNull(settlement);
+        assertNull(settlement.getId());
+        assertNull(settlement.getPayer());
+        assertNull(settlement.getPayee());
+        assertNull(settlement.getAmount());
+    }
 
-        // Create instances of User for payer and payee
-        User payer = new User();
-        User payee = new User();
+    @Test
+    public void testAllArgsConstructor() {
+        User payer = new User(1, "Alice", "alice@example.com");
+        User payee = new User(2, "Bob", "bob@example.com");
 
-        // Set values using setters
-        settlement.setId(1);
-        settlement.setPayer(payer);
-        settlement.setPayee(payee);
-        settlement.setAmount(250.0);
+        Settlement settlement = new Settlement(100, payer, payee, 50.0);
 
-        // Verify values using getters
-        assertEquals(1, settlement.getId());
+        assertNotNull(settlement);
+        assertEquals(100, settlement.getId());
         assertEquals(payer, settlement.getPayer());
         assertEquals(payee, settlement.getPayee());
-        assertEquals(250.0, settlement.getAmount());
+        assertEquals(50.0, settlement.getAmount());
+    }
+
+    @Test
+    public void testSettersAndGetters() {
+        User payer = new User(1, "Alice", "alice@example.com");
+        User payee = new User(2, "Bob", "bob@example.com");
+
+        Settlement settlement = new Settlement();
+        
+        settlement.setId(200);
+        assertEquals(200, settlement.getId());
+
+        settlement.setPayer(payer);
+        assertEquals(payer, settlement.getPayer());
+
+        settlement.setPayee(payee);
+        assertEquals(payee, settlement.getPayee());
+
+        settlement.setAmount(75.0);
+        assertEquals(75.0, settlement.getAmount());
     }
 }

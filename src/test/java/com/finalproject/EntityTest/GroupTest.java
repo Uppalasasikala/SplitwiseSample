@@ -1,46 +1,59 @@
 package com.finalproject.EntityTest;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 import com.finalproject.Entity.Group;
 import com.finalproject.Entity.User;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import java.util.HashSet;
-import java.util.Set;
+public class GroupTest {
 
-class GroupTest {
+	@Test
+	public void testNoArgsConstructor() {
+		Group group = new Group();
+		assertNotNull(group);
+		assertNull(group.getId());
+		assertNull(group.getName());
+		assertNotNull(group.getMembers());
+		assertTrue(group.getMembers().isEmpty());
+	}
 
-    @Test
-    void testGroupEntity() {
-        // Constructor test
-        Group group = new Group();
-        
-        // Create sample data
-        Set<User> members = new HashSet<>();
-        User user1 = new User();
-        User user2 = new User();
-        members.add(user1);
-        members.add(user2);
+	@Test
+	public void testAllArgsConstructor() {
+		User user1 = new User(1, "Alice", "alice@example.com");
+		User user2 = new User(2, "Bob", "bob@example.com");
+		List<User> members = Arrays.asList(user1, user2);
 
-        // Set values using setters
-        group.setId(1);
-        group.setName("Test Group");
-        group.setMembers(members);
+		Group group = new Group(10, "Friends", members);
 
-        // Verify values using getters
-        assertEquals(1, group.getId());
-        assertEquals("Test Group", group.getName());
-        assertEquals(members, group.getMembers());
-    }
+		assertNotNull(group);
+		assertEquals(10, group.getId());
+		assertEquals("Friends", group.getName());
+		assertEquals(2, group.getMembers().size());
+		assertTrue(group.getMembers().contains(user1));
+		assertTrue(group.getMembers().contains(user2));
+	}
 
-    @Test
-    void testParameterizedConstructor() {
-        // Test the parameterized constructor
-        Group group = new Group(2, "Another Group");
+	@Test
+	public void testSettersAndGetters() {
+		Group group = new Group();
 
-        // Since the constructor is empty, values will be null or default
-        assertNull(group.getId());
-        assertNull(group.getName());
-    }
+		group.setId(5);
+		assertEquals(5, group.getId());
+
+		group.setName("Work Buddies");
+		assertEquals("Work Buddies", group.getName());
+
+		User user1 = new User(1, "Charlie", "charlie@example.com");
+		User user2 = new User(2, "David", "david@example.com");
+		List<User> newMembers = Arrays.asList(user1, user2);
+
+		group.setMembers(newMembers);
+		assertEquals(2, group.getMembers().size());
+		assertTrue(group.getMembers().contains(user1));
+		assertTrue(group.getMembers().contains(user2));
+	}
 }

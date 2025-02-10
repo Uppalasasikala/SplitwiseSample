@@ -19,6 +19,14 @@ public class Settlement {
     @Column(name = "amount", nullable = false)
 	public Double amount;
     public Settlement() {}
+    
+	public Settlement(Integer id, User payer, User payee, Double amount) {
+		this.id = id;
+		this.payer = payer;
+		this.payee = payee;
+		this.amount = amount;
+	}
+
 	public Integer getId() {
 		return id;
 	}

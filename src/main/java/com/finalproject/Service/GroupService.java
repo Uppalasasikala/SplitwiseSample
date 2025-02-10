@@ -1,6 +1,6 @@
 package com.finalproject.Service;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class GroupService {
     	Group group = new Group();
         group.setName(name);
         List<User> members = userRepository.findAllById(memberIds);
-        group.setMembers(new HashSet<>(members));
+        group.setMembers(new ArrayList<>(members));
         return groupRepository.save(group);
     }
 

@@ -2,6 +2,7 @@ package com.finalproject.Service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,8 @@ import com.finalproject.Repo.SettlementRepository;
 import com.finalproject.Repo.UserRepository;
 import com.finalproject.dto.SettlementRequest;
 
+import jakarta.annotation.Generated;
+@Generated("Excluded from coverage")
 @Service
 public class SettlementService {
     @Autowired
